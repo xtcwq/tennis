@@ -1,10 +1,10 @@
 package katarule;
 
-import katamodel.MatchSet;
+import katamodel.SetGame;
 
 public class SetPlay {
 
-	MatchSet set = new MatchSet();
+	SetGame set = new SetGame();
 
 	private void affiche() {
 		System.out.println("Match Table: ");
@@ -13,7 +13,7 @@ public class SetPlay {
 
 	void play() throws Exception {
 
-		while (set.winner == null) {
+		while (set.getWinner() == null) {
 
 			Thread.sleep(2000); // play
 			int gagnant = (Math.random() <= 0.5) ? 1 : 2;

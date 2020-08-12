@@ -1,44 +1,56 @@
 package katarule;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.jupiter.api.Test;
 
-import junit.framework.TestCase;
+import katamodel.SetScore;
 
-public class SetRuleTest extends TestCase {
-
-	// US1
-
-	// 0 0 => 0 15
-
-	// 0 15 => 15 15 or 0 30
-
-	// 0 30 => 0 40 or 15 30
-
-	// 0 40 => 15 40 or end
-
-	// 15 15 => 15 30
-
-	// 15 30 => 15 40 or 30 30
-
-	// 15 40 => 30 40 or end
-
-	// 30 30 => 30 40
-
-	// 30 40 =>40 40 or end
+class SetRuleTest {
 
 	@Test
-	void testSimpleRule() {
+	void testSimple() {
+		// 6 vs 0 1 2 3 4
+		SetScore score1 = new SetScore(0, 0);
+		score1 = SetRule.simpleRule(score1, 1);
+		assertEquals(1, score1.getP1());
+		assertEquals(0, score1.getP2());
+
+		score1 = SetRule.simpleRule(score1, 1);
+		assertEquals(2, score1.getP1());
+		assertEquals(0, score1.getP2());
+
+		score1 = SetRule.simpleRule(score1, 2);
+		assertEquals(2, score1.getP1());
+		assertEquals(1, score1.getP2());
+
+		score1.setP1(4);
+		score1.setP2(6);
+		score1 = SetRule.simpleRule(score1, 1);
+		assertEquals(5, score1.getP1());
+		assertEquals(6, score1.getP2());
+
+		score1.setP1(4);
+		score1.setP2(6);
+		score1 = SetRule.simpleRule(score1, 2);
+		assertEquals(0, score1.getP1());
+		assertEquals(0, score1.getP2());
+
+		score1.setP1(3);
+		score1.setP2(6);
+		score1 = SetRule.simpleRule(score1, 2);
+		assertEquals(0, score1.getP1());
+		assertEquals(0, score1.getP2());
+
+		score1 = SetRule.simpleRule(score1, 1);
+		assertEquals(5, score1.getP1());
+		assertEquals(1, score1.getP2());
+
 	}
 
-	// US2
-	// 40 40 => 40 ADV
-
-	// 40 ADV => DEUCE or end
-
-	// DEUCE => 40 ADV
-
 	@Test
-	void testDeuseRule() {
+	void testSeven() {
+		// 5 vs 7
 	}
 
 	// US4
@@ -49,7 +61,7 @@ public class SetRuleTest extends TestCase {
 	// 6 vs 3
 	// 7 vs 5
 	@Test
-	void testTieRule() {
+	void testTie() {
+		//
 	}
-
 }
