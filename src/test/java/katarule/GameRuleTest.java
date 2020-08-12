@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import junit.framework.TestCase;
 import kataenum.GameEnum;
 import katamodel.GameScore;
+import katamodel.TieScore;
 
 public class GameRuleTest extends TestCase {
 
@@ -205,6 +206,47 @@ public class GameRuleTest extends TestCase {
 		score1 = GameRule.chooseRule(score1, 1);
 		assertEquals(score1.getP1(), GameEnum.ADV);
 		assertEquals(score1.getP2(), GameEnum.FORTY);
+	}
+
+	@Test
+	public void testTie() {
+		// 0-6 same as simpleRule
+		TieScore score1 = new TieScore(0, 0);
+		score1 = GameRule.tieRule(score1, 1);
+		assertEquals(1, score1.getP1());
+		assertEquals(0, score1.getP2());
+
+		// till 6 vs 5
+		score1.setP1(6);
+		score1.setP2(5);
+		score1 = GameRule.tieRule(score1, 1);
+		assertEquals(0, score1.getP1());
+		assertEquals(0, score1.getP2());
+
+		score1.setP1(6);
+		score1.setP2(5);
+		score1 = GameRule.tieRule(score1, 2);
+		assertEquals(6, score1.getP1());
+		assertEquals(6, score1.getP2());
+
+		score1.setP1(6);
+		score1.setP2(6);
+		score1 = GameRule.tieRule(score1, 1);
+		assertEquals(7, score1.getP1());
+		assertEquals(6, score1.getP2());
+
+		score1.setP1(7);
+		score1.setP2(6);
+		score1 = GameRule.tieRule(score1, 1);
+		assertEquals(0, score1.getP1());
+		assertEquals(0, score1.getP2());
+
+		score1.setP1(7);
+		score1.setP2(7);
+		score1 = GameRule.tieRule(score1, 1);
+		assertEquals(8, score1.getP1());
+		assertEquals(7, score1.getP2());
+
 	}
 
 }

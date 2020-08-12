@@ -1,6 +1,6 @@
 package kata;
 
-import katarule.GamePlay;
+import katarule.SetPlay;
 
 /**
  * Hello world!
@@ -8,13 +8,17 @@ import katarule.GamePlay;
  */
 public class App {
 
-	GamePlay game = new GamePlay();
-
 	public static void main(String[] args) throws Exception {
 
-		System.out.println("The Mache begin!");
-		GamePlay game = new GamePlay();
-		game.play();
+		System.out.println("The Match begin!");
+		SetPlay match = new SetPlay();
+//		if (args.length == 1) {
+//			match.setMode(Integer.valueOf(args[0]));// NumberFormatException
+//		} else {
+//			match.setMode(0);
+//		}
+		match.initGame();
+		match.play();
 	}
 
 }

@@ -4,24 +4,15 @@ import katamodel.SetScore;
 
 public class SetRule {
 
-	// todo
-
 	public static SetScore simpleRule(SetScore now, int winner) {
-		// rule set
-
-		return null;
-	}
-
-	public static SetScore sevenRule(SetScore now, int winner) {
-		// rule set
-
-		return null;
-	}
-
-	public static SetScore tieRule(int winner) {
-		// rule set
-
-		return null;
+		if (winner == 1) {
+			int p1 = now.getP1();
+			now.setP1(p1 + 1);
+		} else {
+			int p2 = now.getP2();
+			now.setP2(p2 + 1);
+		}
+		return now;
 	}
 
 }

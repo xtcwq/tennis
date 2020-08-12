@@ -2,6 +2,7 @@ package katarule;
 
 import kataenum.GameEnum;
 import katamodel.GameScore;
+import katamodel.TieScore;
 
 //SPRINT1
 
@@ -14,42 +15,60 @@ public class GameRule {
 	}
 
 	public static GameScore simpleRule(GameScore now, int winner) {
+		GameEnum p1 = now.getP1();
+		GameEnum p2 = now.getP2();
+		GameScore newS = new GameScore(p1, p2);
 		if (winner == 1) {
-			GameEnum p1 = now.getP1();
-			now.setP1(p1.next());
+			newS.setP1(p1.next());
 		} else {
-			GameEnum p2 = now.getP2();
-			now.setP2(p2.next());
+			newS.setP2(p2.next());
 		}
 
 		// end
-		if (now.getP1().getIndex() == 4 || now.getP2().getIndex() == 4) {
-			now.setP1(GameEnum.LOVE);
-			now.setP2(GameEnum.LOVE);
+		if (newS.getP1().getIndex() == 4 || newS.getP2().getIndex() == 4) {
+			newS.setP1(GameEnum.LOVE);
+			newS.setP2(GameEnum.LOVE);
 		}
-		return now;
+		return newS;
 	}
 
 	public static GameScore deuseRule(GameScore now, int winner) {
 		GameEnum p1 = now.getP1();
 		GameEnum p2 = now.getP2();
+		GameScore newS = new GameScore(p1, p2);
 		// 40 40 or DEUSE
 		if (p1.getIndex() == p2.getIndex()) {
 			if (winner == 1) {
-				now.setP1(GameEnum.ADV);
-				now.setP2(GameEnum.FORTY);
+				newS.setP1(GameEnum.ADV);
+				newS.setP2(GameEnum.FORTY);
 			} else {
-				now.setP2(GameEnum.ADV);
-				now.setP1(GameEnum.FORTY);
+				newS.setP2(GameEnum.ADV);
+				newS.setP1(GameEnum.FORTY);
 			}
 		} else if ((p1.getIndex() > p2.getIndex() && winner == 1) || (p1.getIndex() < p2.getIndex() && winner == 2)) {
-			now.setP1(GameEnum.LOVE);
-			now.setP2(GameEnum.LOVE);
+			newS.setP1(GameEnum.LOVE);
+			newS.setP2(GameEnum.LOVE);
 		} else {
-			now.setP1(GameEnum.DEUCE);
-			now.setP2(GameEnum.DEUCE);
+			newS.setP1(GameEnum.DEUCE);
+			newS.setP2(GameEnum.DEUCE);
 		}
-		return now;
+		return newS;
+	}
+
+	public static TieScore tieRule(TieScore tienow, int winner) {
+		int p1 = tienow.getP1();
+		int p2 = tienow.getP2();
+		TieScore newT = new TieScore(p1, p2);
+		if (winner == 1) {
+			newT.setP1(p1 + 1);
+		} else {
+			newT.setP2(p2 + 1);
+		}
+		if ((newT.getP1() > 6 || newT.getP2() > 6) && Math.abs(newT.getP1() - newT.getP2()) > 1) {
+			newT.setP1(0);
+			newT.setP2(0);
+		}
+		return newT;
 	}
 
 }
